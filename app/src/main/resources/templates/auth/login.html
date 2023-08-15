@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+  <head>
+    <title>Please Log In</title>
+    <link th:href="@{/css/login.css}" rel="stylesheet" />
+    <script type="text/javascript" th:src="@{/js/main.js}"></script>
+  </head>
+  <body>
+    <!-- ~{<template-name>::<fragment-name>} -->
+    <div th:insert="~{fragments/header::header}"></div>
+
+    <div class="login__container">
+      <form
+        class="login__input__container"
+        method="post"
+        th:action="@{/login}"
+        th:object="${login}"
+      >
+        <div class="login__warning" th:if="${loginSuccess} == false">
+          Authentication failed, check your credentials!
+        </div>
+
+        <div id="heading" th:onclick="hello()">Please Log In</div>
+
+        <input
+          class="login__input"
+          id="name"
+          placeholder="Enter Name"
+          required
+          type="text"
+          th:field="*{username}"
+        />
+        <input
+          class="login__input"
+          id="password"
+          placeholder="Enter Password"
+          required
+          type="password"
+          th:field="*{password}"
+        />
+        <input class="login__button" type="submit" value="Log In" />
+      </form>
+    </div>
+
+    <div th:insert="~{fragments/footer::footer}"></div>
+  </body>
+</html>

@@ -1,0 +1,31 @@
+.register__container {
+  margin: 1rem;
+}
+
+.register__button {
+  border: none;
+  background-color: transparent;
+  font-size: medium;
+  margin-top: 1rem;
+}
+
+.register__button:hover {
+  transform: scale(1.1);
+}
+
+.register__input__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.register__input {
+  width: 40vw;
+  height: 2rem;
+  margin: 0.3rem;
+  padding: 0 0 0 0.3rem;
+}
+
+.register__warning {
+  color: red;
+}
