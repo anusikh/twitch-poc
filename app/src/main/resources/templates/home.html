@@ -1,11 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sample</title>
-</head>
-<body>
-    Sample
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home</title>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <script>
+      var video = document.getElementById("video");
+      var videoSrc = "/home/anusikh/Desktop/twitch-poc/infra/data/sample.m3u8";
+      if (Hls.isSupported()) {
+        console.log("hello1");
+        var hls = new Hls();
+        hls.loadSource(videoSrc);
+        hls.attachMedia(video);
+      } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
+        console.log("hello2");
+        video.src = videoSrc;
+      }
+    </script>
+  </head>
+  <body>
+    <video id="video" width="800" controls></video>
+  </body>
 </html>
