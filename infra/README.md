@@ -7,4 +7,5 @@
 - we then make changes to nginx.conf to enable hls so that we can view the stream in brower/phones
 
 TODO:
+[] try to dockerize the thymeleaf app
 [] i can see the m3u8 file generated in data folder, figure how to display that stream
