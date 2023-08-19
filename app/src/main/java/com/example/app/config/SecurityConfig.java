@@ -53,14 +53,16 @@ public class SecurityConfig {
         return httpSecurity.cors(x -> x.disable())
                 .csrf(x -> x.disable())
                 .authorizeHttpRequests(
-                        x -> x.requestMatchers("/login", "/js/*.js", "/css/*.css", "/register", "/video/**").permitAll())
-                .authorizeHttpRequests(x -> x.requestMatchers("/home").authenticated())
+                        x -> x.requestMatchers("/login", "/js/*.js", "/css/*.css", "/register", "/video/**")
+                                .permitAll())
+                .authorizeHttpRequests(x -> x.requestMatchers("/home", "/start").authenticated())
                 .formLogin(x -> x.loginPage("/login")
                         .loginProcessingUrl("/process_login")
                         .defaultSuccessUrl("/home")
                         .permitAll())
                 // in the above step, we have changed the login page to our custom one
-                // we have also added the /process_login which corresponds to POST /login in MainController
+                // we have also added the /process_login which corresponds to POST /login in
+                // MainController
                 // defaultSuccessUrl is self explanatory (sample is the home page)
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)

@@ -1,5 +1,7 @@
 package com.example.app.controller;
 
+import java.security.Principal;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -99,5 +101,13 @@ public class MainController {
     public String video(@PathVariable("username") String username, Model model) {
         model.addAttribute("streamerUrl", "http://localhost:8081/hls/" + username + ".m3u8");
         return "video";
+    }
+
+    // gives the stream key
+    @GetMapping("/start")
+    public String start(Principal principal, Model model) {
+        Optional<UserInfo> userInfo = userInfoRepository.findByName(principal.getName());
+        model.addAttribute("streamKey", userInfo.get().getStreamKey());
+        return "start";
     }
 }

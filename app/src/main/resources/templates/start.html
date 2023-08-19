@@ -3,12 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Home</title>
+    <title>Start Stream</title>
   </head>
   <body>
     <div th:insert="~{fragments/header::header}"></div>
 
-    Home
+    <div th:text="${streamKey}"></div>
 
     <div th:insert="~{fragments/footer::footer}"></div>
   </body>
