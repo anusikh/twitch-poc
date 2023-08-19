@@ -53,7 +53,7 @@ public class SecurityConfig {
         return httpSecurity.cors(x -> x.disable())
                 .csrf(x -> x.disable())
                 .authorizeHttpRequests(
-                        x -> x.requestMatchers("/login", "/js/*.js", "/css/*.css", "/register").permitAll())
+                        x -> x.requestMatchers("/login", "/js/*.js", "/css/*.css", "/register", "/video/**").permitAll())
                 .authorizeHttpRequests(x -> x.requestMatchers("/home").authenticated())
                 .formLogin(x -> x.loginPage("/login")
                         .loginProcessingUrl("/process_login")

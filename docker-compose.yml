@@ -1,0 +1,44 @@
+version: "3.9"
+services:
+  rtmp:
+    build: ./infra/rtmp
+    ports:
+      - "1935:1935"
+      - "8081:8081"
+    container_name: rtmp_server
+    volumes:
+      - ./data:/tmp/hls # storing the m3u8 files in base directory
+    depends_on:
+      - "auth"
+
+  auth:
+    build: ./infra/auth
+    container_name: auth_server
+    depends_on:
+      - "db"
+
+  app: # the thymeleaf app
+    build: ./app
+    container_name: main_app
+    ports:
+      - "8080:8080"
+    environment:
+      MYSQL_HOST: twitch-poc
+    depends_on:
+      - "db" # u add service names here, not container names
+      - "auth"
+      - "rtmp"
+
+  db:
+    image: mysql:5.7
+    ports:
+      - "3306:3306"
+    container_name: "twitch-poc"
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_DATABASE: "twitch-poc"
+      MYSQL_PASSWORD: "root"
+      MYSQL_ROOT_PASSWORD: "root"
+    volumes:
+      - ./db:/var/lib/mysql

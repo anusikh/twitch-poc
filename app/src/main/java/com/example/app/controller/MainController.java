@@ -1,5 +1,7 @@
 package com.example.app.controller;
 
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
@@ -12,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.app.dto.LoginDto;
@@ -83,10 +86,18 @@ public class MainController {
     public String registerUser(@ModelAttribute("user") UserInfo userInfo, BindingResult bindingResult, Model model) {
         if (!userInfoRepository.existsByEmail(userInfo.getEmail())) {
             userInfo.setPassword(passwordEncoder.encode(userInfo.getPassword()));
+            userInfo.setStreamKey(UUID.randomUUID().toString());
             userInfoRepository.save(userInfo);
             return "redirect:/login";
         }
         model.addAttribute("existsEmail", true);
         return "auth/register";
+    }
+
+    // video player path for any user
+    @GetMapping("/video/{username}")
+    public String video(@PathVariable("username") String username, Model model) {
+        model.addAttribute("streamerUrl", "http://localhost:8081/hls/" + username + ".m3u8");
+        return "video";
     }
 }

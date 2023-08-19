@@ -14,9 +14,17 @@ NOTES:
 
 TODO:
 
+- run the jar in a container [DONE]
 - generate a stream key for a signed in user and save in db
-- start streaming menu
-- routing: localhost:8080/anusikh2001, should take me to anusikh2001's stream, and the video source should be set appropriately
-- improve auth_service
+    - for this, every time a new account is created, a stream key will be generated and stored in the db [DONE]
+    - `<USER_NAME>?key=<KEY_VALUE>` from this in obs, we get the streamer's username and the stream key [DONE]
+    - we will fetch data for that user from the db and compare if the received streamer key is same as the key passed [DONE]
+    - if so, user will be able to connect to stream [DONE]
+    - routing: localhost:8080/anusikh2001, should take me to anusikh2001's stream, and the video source should be set appropriately [DONE]
 - a home page where all online streamers can be seen
-- enable audio
+    - create a html page/route that shows the stream key
+    - figure out the online and offline mechanism
+    - also make homepage accessible to all, with options to login and register
+- start streaming menu
+- improve auth_service
+- enable audio [DONE] automatically hanled by rtmp

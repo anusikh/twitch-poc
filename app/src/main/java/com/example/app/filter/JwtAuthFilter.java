@@ -29,12 +29,14 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     private UserInfoUserDetailsService userInfoUserDetailsService;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+            throws ServletException, IOException {
         // directly access cookies and authenticate
         Cookie[] cookies = request.getCookies();
-        Cookie authCookie = cookies == null ? null : Arrays.stream(cookies)
-                .filter(cookie -> cookie.getName().equals("AUTH_TOKEN"))
-                .findAny().orElse(null);
+        Cookie authCookie = cookies == null ? null
+                : Arrays.stream(cookies)
+                        .filter(cookie -> cookie.getName().equals("AUTH_TOKEN"))
+                        .findAny().orElse(null);
         String username = null;
         String token = null;
         if (authCookie != null) {
@@ -45,11 +47,13 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = userInfoUserDetailsService.loadUserByUsername(username);
             if (jwtUtil.validateToken(token, userDetails)) {
-                UsernamePasswordAuthenticationToken authToken
-                        = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userDetails,
+                        null, userDetails.getAuthorities());
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             }
+        } else {
+            response.sendRedirect("/login");
         }
 
         filterChain.doFilter(request, response);
