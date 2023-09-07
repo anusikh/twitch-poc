@@ -3,8 +3,8 @@ services:
   rtmp:
     build: ./infra/rtmp
     ports:
-      - "1935:1935"
-      - "8081:8081"
+      - "1935:1935" # rtmp://
+      - "8081:8081" # http://
     container_name: rtmp_server
     volumes:
       - ./data:/tmp/hls # storing the m3u8 files in base directory
